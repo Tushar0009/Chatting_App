@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_hub/auth/loginScreen.dart';
 import 'package:chat_hub/models/user_firebase_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_hub/main.dart';
@@ -42,12 +43,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             backgroundColor: Colors.red,
             onPressed: () async {
               Dialogs.onProgress(context);
+              await APIS.updateOnlineStatus(false);
               await APIS.auth.signOut().then((value) async {
                 await GoogleSignIn().signOut().then((value) {
                   //to pop profile screen
                   Navigator.of(context).pop();
                   // to Pop home Screen
                   Navigator.of(context).pop();
+
+                  APIS.auth = FirebaseAuth.instance;
 
                   Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => LoginScreen()));

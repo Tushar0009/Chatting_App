@@ -1,11 +1,10 @@
 import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_hub/api/apis.dart';
 import 'package:chat_hub/helper/dateTimeFornat.dart';
 import 'package:chat_hub/models/user_firebase_model.dart';
+import 'package:chat_hub/screens/viewUserProfile.dart';
 import 'package:chat_hub/widgets/messageCard.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -134,7 +133,11 @@ class _CharScreenState extends State<CharScreen> {
         Color(0xFF7F7FD5),
       ], transform: GradientRotation(180))),
       child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => ViewUserProfile(user: widget.chatUser),
+            ));
+          },
           child: StreamBuilder(
             stream: APIS.getUserInfo(widget.chatUser),
             builder: (context, snapshot) {
@@ -157,7 +160,9 @@ class _CharScreenState extends State<CharScreen> {
                     child: CachedNetworkImage(
                       width: mq.height * 0.05,
                       height: mq.height * 0.05,
-                      imageUrl: widget.chatUser.image,
+                      imageUrl: list.isNotEmpty
+                          ? list[0].image
+                          : widget.chatUser.image,
                       errorWidget: (context, url, error) =>
                           const CircleAvatar(child: Icon(Icons.person)),
                     ),
@@ -170,7 +175,7 @@ class _CharScreenState extends State<CharScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.chatUser.name,
+                        list.isNotEmpty ? list[0].name : widget.chatUser.name,
                         style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -180,10 +185,16 @@ class _CharScreenState extends State<CharScreen> {
                         height: 2,
                       ),
                       Text(
-                        list.isNotEmpty ? 
-                        list[0].isOnline ? 'Online ' :
-                        MyDateTime.getLastActiveTime(context: context, lastActiveTime: list[0].lastActive) 
-                        :MyDateTime.getLastActiveTime(context: context, lastActiveTime: widget.chatUser.lastActive,), 
+                        list.isNotEmpty
+                            ? list[0].isOnline
+                                ? 'Online '
+                                : MyDateTime.getLastActiveTime(
+                                    context: context,
+                                    lastActiveTime: list[0].lastActive)
+                            : MyDateTime.getLastActiveTime(
+                                context: context,
+                                lastActiveTime: widget.chatUser.lastActive,
+                              ),
                         style: const TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w400,

@@ -3,6 +3,7 @@ import 'package:chat_hub/models/user_firebase_model.dart';
 import 'package:chat_hub/screens/user_profile.dart';
 import 'package:chat_hub/widgets/chat_user_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 enum SampleItem { itemOne, itemTwo }
 
@@ -25,6 +26,18 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement initState
     super.initState();
     APIS.currentUserInfo();
+    // setting user active status to online
+    APIS.updateOnlineStatus(true);
+    //now it work according to user lifestyle
+    SystemChannels.lifecycle.setMessageHandler((message) {
+      if (APIS.auth.currentUser != null) {
+        if (message.toString().contains("pause"))
+          APIS.updateOnlineStatus(false); //last online
+        if (message.toString().contains("resume"))
+          APIS.updateOnlineStatus(true); // active / online
+      }
+      return Future.value(message);
+    });
   }
 
   @override
@@ -46,16 +59,13 @@ class _HomeScreenState extends State<HomeScreen> {
             appBar: AppBar(
               backgroundColor: Colors.transparent,
               flexibleSpace: Container(
-                 decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-        Color(0xFF31B7C2),
-        Color(0xFF7BC393),
-        Color(0xFF91EAE4),
-        Color(0xFF7F7FD5),
-      ],
-      transform: GradientRotation(180)
-      )
-      ),
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: [
+                  Color(0xFF31B7C2),
+                  Color(0xFF7BC393),
+                  Color(0xFF91EAE4),
+                  Color(0xFF7F7FD5),
+                ], transform: GradientRotation(180))),
               ),
               title: _isSearching
                   ? TextField(
@@ -126,8 +136,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-
-
             body: StreamBuilder(
               stream: APIS.getAllUSers(),
               builder: (context, snapshot) {

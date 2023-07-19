@@ -1,18 +1,8 @@
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chat_hub/auth/loginScreen.dart';
 import 'package:chat_hub/models/user_firebase_model.dart';
 import 'package:chat_hub/screens/chat_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_hub/main.dart';
-import 'package:chat_hub/api/apis.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:chat_hub/helper/dialogs.dart';
-import 'package:image_picker/image_picker.dart';
-
 class ViewUserProfile extends StatefulWidget {
   const ViewUserProfile({super.key, required this.user});
 

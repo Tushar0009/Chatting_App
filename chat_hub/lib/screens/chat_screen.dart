@@ -126,12 +126,8 @@ class _CharScreenState extends State<CharScreen> {
   Widget _customAppBar() {
     return Container(
       decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-        Color(0xFF31B7C2),
-        Color(0xFF7BC393),
-        Color(0xFF91EAE4),
-        Color(0xFF7F7FD5),
-      ], transform: GradientRotation(180))),
+          color : Color(0xFFc55df6),
+          ),
       child: InkWell(
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
@@ -151,7 +147,7 @@ class _CharScreenState extends State<CharScreen> {
                       onPressed: () => Navigator.pop(context),
                       icon: const Icon(
                         Icons.arrow_back,
-                        color: Colors.black,
+                        color: Colors.white,
                       )),
 
                   // adding image in appbar
@@ -177,9 +173,9 @@ class _CharScreenState extends State<CharScreen> {
                       Text(
                         list.isNotEmpty ? list[0].name : widget.chatUser.name,
                         style: const TextStyle(
-                            fontSize: 16,
+                            fontSize: 18,
                             fontWeight: FontWeight.w500,
-                            color: Colors.black87),
+                            color: Colors.white),
                       ),
                       SizedBox(
                         height: 2,
@@ -187,7 +183,7 @@ class _CharScreenState extends State<CharScreen> {
                       Text(
                         list.isNotEmpty
                             ? list[0].isOnline
-                                ? 'Online '
+                                ? 'Online'
                                 : MyDateTime.getLastActiveTime(
                                     context: context,
                                     lastActiveTime: list[0].lastActive)
@@ -198,7 +194,7 @@ class _CharScreenState extends State<CharScreen> {
                         style: const TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w400,
-                            color: Colors.black54),
+                            color: Colors.white),
                       ),
                     ],
                   )

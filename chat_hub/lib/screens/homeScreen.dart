@@ -60,12 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundColor: Colors.transparent,
               flexibleSpace: Container(
                 decoration: BoxDecoration(
-                    gradient: LinearGradient(colors: [
-                  Color(0xFF31B7C2),
-                  Color(0xFF7BC393),
-                  Color(0xFF91EAE4),
-                  Color(0xFF7F7FD5),
-                ], transform: GradientRotation(180))),
+                   color: Color(0xFFc55df6),
+              ),
               ),
               title: _isSearching
                   ? TextField(
@@ -96,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   : Text(
                       'ChatHub',
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.grey),
+                          fontWeight: FontWeight.bold, color: Colors.white , fontSize: 22),
                     ),
               actions: [
                 IconButton(

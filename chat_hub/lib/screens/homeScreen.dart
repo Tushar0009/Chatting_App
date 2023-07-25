@@ -26,15 +26,14 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement initState
     super.initState();
     APIS.currentUserInfo();
-    // setting user active status to online
-    APIS.updateOnlineStatus(true);
+    
     //now it work according to user lifestyle
     SystemChannels.lifecycle.setMessageHandler((message) {
       if (APIS.auth.currentUser != null) {
-        if (message.toString().contains("pause"))
-          APIS.updateOnlineStatus(false); //last online
         if (message.toString().contains("resume"))
           APIS.updateOnlineStatus(true); // active / online
+        if (message.toString().contains("pause"))
+          APIS.updateOnlineStatus(false); //last online
       }
       return Future.value(message);
     });
@@ -57,7 +56,6 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         child: Scaffold(
             appBar: AppBar(
-              backgroundColor: Colors.transparent,
               flexibleSpace: Container(
                 decoration: BoxDecoration(
                    color: Color(0xFFc55df6),
@@ -66,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
               title: _isSearching
                   ? TextField(
                       decoration: InputDecoration(
+                        labelStyle: TextStyle(color : Colors.white),
                         label: Text("Username , Email ....."),
                         border: InputBorder.none,
                       ),
@@ -102,12 +101,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       });
                     },
                     icon: Icon(
-                        _isSearching ? Icons.cancel_outlined : Icons.search)),
+                        _isSearching ? Icons.cancel_outlined : Icons.search , color: Colors.white,)),
                 PopupMenuButton<SampleItem>(
-                  color: Colors.white,
                   icon: Icon(
                     Icons.more_vert,
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                   onSelected: (SampleItem value) {
                     setState(() {

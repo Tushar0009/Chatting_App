@@ -51,14 +51,14 @@ class _MessageCardState extends State<MessageCard> {
             decoration: BoxDecoration(
                 gradient: const LinearGradient(
                   colors: [
-                    Color(0xFF31B7C2),
-                    Color(0xFF7BC393),
+                    Color(0xFFeccaff),
+                    Color(0xFFbccbfd),
                   ],
                 ),
                 border:
                     Border.all(color: Colors.grey.withOpacity(0.1), width: 0.5),
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(mq.width * 0.06),
+                  topRight: Radius.circular(mq.width * 0.06),
                   topLeft: Radius.circular(mq.width * 0.06),
                   bottomRight: Radius.circular(mq.width * 0.06),
                 )),
@@ -109,15 +109,16 @@ class _MessageCardState extends State<MessageCard> {
                 gradient: const LinearGradient(
                   colors: [
                     Color(0xFF7F7FD5),
-                    Color(0xFF91EAE4),
+                    Color(0xFFc46df7),
                   ],
+                  transform: GradientRotation(180)
                 ),
                 border:
                     Border.all(color: Colors.grey.withOpacity(0.1), width: 0.5),
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(mq.width * 0.06),
+                  topLeft: Radius.circular(mq.width * 0.06),
                   topRight: Radius.circular(mq.width * 0.06),
-                  bottomRight: Radius.circular(mq.width * 0.06),
+                  bottomLeft: Radius.circular(mq.width * 0.06),
                 )),
             child: widget.currMessage.type == Type.text
                 ? Text(

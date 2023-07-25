@@ -106,7 +106,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           onPressed: _showBottomSheet,
                           child: Icon(
                             CupertinoIcons.photo_camera_solid,
-                            color: Colors.blue,
+                            color: Color(0xFF8b2fc9),
                             size: 25,
                           ),
                         )),
@@ -137,7 +137,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     decoration: InputDecoration(
                       prefixIcon: const Icon(
                         Icons.person,
-                        color: Colors.blue,
+                        color: Color(0xFFb66ee8),
                       ),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15)),
@@ -158,7 +158,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     decoration: InputDecoration(
                       prefixIcon: const Icon(
                         Icons.info_outline,
-                        color: Colors.blue,
+                        color: Color(0xFFb66ee8),
                       ),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15)),
@@ -172,13 +172,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF8b2fc9),
                         shape: RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.circular(mq.width * 0.04)),
                         minimumSize: Size(mq.width * 0.27, mq.height * 0.06)),
                     label: const Text(
                       "Save",
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(fontSize: 18 ,) ,
                     ),
                     icon: const Icon(Icons.edit),
                     onPressed: () {

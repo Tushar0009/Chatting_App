@@ -72,10 +72,10 @@ class _ChatUsersCartState extends State<ChatUsersCart> {
                     : _message!.read.isEmpty &&
                             _message!.fromId != APIS.getUser.uid
                         ? Container(
-                            color: Colors.green.shade400,
                             height: 15,
                             width: 15,
                             decoration: BoxDecoration(
+                               color : Colors.green,
                                 borderRadius: BorderRadius.circular(10)),
                           )
                         : Text(MyDateTime.getLastMessageDate(

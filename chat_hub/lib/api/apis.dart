@@ -1,10 +1,13 @@
+import 'dart:convert';
 import 'dart:io';
-
+import 'dart:math';
 import 'package:chat_hub/models/messagesModel.dart';
 import 'package:chat_hub/models/user_firebase_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:http/http.dart';
 
 class APIS {
   static FirebaseAuth auth = FirebaseAuth.instance;
@@ -17,6 +20,46 @@ class APIS {
 
   static late UserFireBase currUser;
 
+  // messenging notification
+  static FirebaseMessaging fireMessenging = FirebaseMessaging.instance;
+
+  static Future<void> getMessagingToken() async {
+    await fireMessenging.requestPermission();
+
+    await fireMessenging.getToken().then((value) {
+      if (value != null) {
+        currUser.pushToken = value;
+        print("Token Key : " + value);
+      }
+    });
+  }
+
+// to send message in notification
+  static Future<void> sendNotification(
+      UserFireBase charUser, String message) async {
+    try {
+      final body = {
+        "to": charUser.pushToken,
+        "notification": {
+          "title": charUser.name, //our name should be send
+          "body": message,
+        }
+      };
+      var response =
+          await post(Uri.parse('https://fcm.googleapis.com/fcm/send'),
+              headers: {
+                HttpHeaders.contentTypeHeader: 'application/json',
+                HttpHeaders.authorizationHeader:
+                    'key=AAAACg9YVFs:APA91bE3bhi6HvhzIEdXitcPVXnhfBVJwfyq8SJKQxCWGO2oXxvvZZsjENVCqV3EQuVu3ArptH4uTnBQ-2EQy58ypjwPEJJjdQGLfE9A5gDB1dTAW3B2oopIpbIMDpwyYG2azuJMZevy'
+              },
+              body: jsonEncode(body));
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+    } catch (e) {
+      print("\n push notification  $e");
+    }
+  }
+
   //getting current user info
   static Future<void> currentUserInfo() async {
     await firestore
@@ -26,6 +69,9 @@ class APIS {
         .then((user) async {
       if (user.exists) {
         currUser = UserFireBase.fromJson(user.data()!);
+        await getMessagingToken();
+        // setting user active status to online
+        APIS.updateOnlineStatus(true);
       } else {
         await newUser().then((value) => currentUserInfo());
       }
@@ -69,10 +115,10 @@ class APIS {
   }
 
   static Future<void> updateUserInfo() async {
-    await firestore
-        .collection('users')
-        .doc(getUser.uid)
-        .update({'name': currUser.name, 'about': currUser.about});
+    await firestore.collection('users').doc(getUser.uid).update({
+      'name': currUser.name,
+      'about': currUser.about,
+    });
   }
 
 // user profile update
@@ -118,11 +164,12 @@ class APIS {
   static Future<void> updateOnlineStatus(bool isOnline) async {
     firestore.collection('users').doc(getUser.uid).update({
       'is_online': isOnline,
-      'last_active': DateTime.now().millisecondsSinceEpoch.toString()
+      'last_active': DateTime.now().millisecondsSinceEpoch.toString(),
+      'push_token': currUser.pushToken
     });
   }
 
-  // sending Function
+  // sending Message Function
   static Future<void> sendMessage(
       UserFireBase user, String message, Type type) async {
     final time = DateTime.now().millisecondsSinceEpoch.toString();
@@ -136,7 +183,8 @@ class APIS {
         sent: time);
     final ref =
         firestore.collection('chats/${getConversationId(user.id)}/messages/');
-    await ref.doc(time).set(createMessage.toJson());
+    await ref.doc(time).set(createMessage.toJson()).then((value) =>
+        sendNotification(user, type == Type.image ? 'Image' : message));
   }
 
   // message is read or not

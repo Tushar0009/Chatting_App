@@ -47,7 +47,7 @@ class _CharScreenState extends State<CharScreen> {
               automaticallyImplyLeading: false,
               flexibleSpace: _customAppBar(),
             ),
-            backgroundColor: Color(0xFFd8f3dc),
+            backgroundColor: Color(0xFFc37df8),
             body: Column(children: [
               Expanded(
                 child: StreamBuilder(
@@ -224,7 +224,7 @@ class _CharScreenState extends State<CharScreen> {
                       },
                       icon: const Icon(
                         Icons.emoji_emotions_sharp,
-                        color: Colors.blue,
+                        color: Color(0xFFb66ee8),
                         size: 26,
                       )),
                   Expanded(
@@ -237,7 +237,7 @@ class _CharScreenState extends State<CharScreen> {
                       },
                       decoration: InputDecoration(
                           hintText: "Type Something....",
-                          hintStyle: TextStyle(color: Colors.blueAccent),
+                          hintStyle: TextStyle(color: Color(0xFFb66ee8)),
                           border: InputBorder.none),
                     ),
                   ),
@@ -257,7 +257,7 @@ class _CharScreenState extends State<CharScreen> {
                       },
                       icon: const Icon(
                         Icons.image,
-                        color: Colors.blue,
+                        color: Color(0xFFb66ee8),
                         size: 26,
                       )),
                   IconButton(
@@ -274,7 +274,7 @@ class _CharScreenState extends State<CharScreen> {
                       },
                       icon: const Icon(
                         Icons.camera_alt,
-                        color: Colors.blue,
+                        color: Color(0xFFb66ee8),
                         size: 26,
                       )),
                   SizedBox(
@@ -294,7 +294,7 @@ class _CharScreenState extends State<CharScreen> {
             },
             minWidth: 0,
             padding: EdgeInsets.only(left: 10, right: 5, bottom: 8, top: 8),
-            color: Colors.blueAccent.shade700,
+            color: Color(0xFF8b2fc9),
             shape: const CircleBorder(),
             child: const Icon(
               Icons.send,

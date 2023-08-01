@@ -106,7 +106,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           onPressed: _showBottomSheet,
                           child: Icon(
                             CupertinoIcons.photo_camera_solid,
-                            color: Color(0xFF8b2fc9),
+                            color: Color(0XFFa100f2),
                             size: 25,
                           ),
                         )),
@@ -137,7 +137,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     decoration: InputDecoration(
                       prefixIcon: const Icon(
                         Icons.person,
-                        color: Color(0xFFb66ee8),
+                        color: Color(0XFFa100f2),
                       ),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15)),
@@ -158,7 +158,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     decoration: InputDecoration(
                       prefixIcon: const Icon(
                         Icons.info_outline,
-                        color: Color(0xFFb66ee8),
+                        color: Color(0XFFa100f2),
                       ),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15)),
@@ -172,7 +172,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF8b2fc9),
+                      backgroundColor: Color(0XFFa100f2),
                         shape: RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.circular(mq.width * 0.04)),

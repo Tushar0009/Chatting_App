@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 import 'package:chat_hub/models/messagesModel.dart';
 import 'package:chat_hub/models/user_firebase_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -32,6 +31,14 @@ class APIS {
         print("Token Key : " + value);
       }
     });
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Got a message whilst in the foreground!');
+      print('Message data: ${message.data}');
+
+      if (message.notification != null) {
+        print('Message also contained a notification: ${message.notification}');
+      }
+    });
   }
 
 // to send message in notification
@@ -43,7 +50,11 @@ class APIS {
         "notification": {
           "title": charUser.name, //our name should be send
           "body": message,
-        }
+          "android_channel_id": "Chats",
+        },
+        "data": {
+          "user_data": "User: ${currUser.id} ",
+        },
       };
       var response =
           await post(Uri.parse('https://fcm.googleapis.com/fcm/send'),

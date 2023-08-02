@@ -191,10 +191,11 @@ class _CharScreenState extends State<CharScreen> {
                                 context: context,
                                 lastActiveTime: widget.chatUser.lastActive,
                               ),
-                        style: const TextStyle(
+                        style:  TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w400,
-                            color: Colors.white),
+                             color: Colors.white ,
+                            ),
                       ),
                     ],
                   )

@@ -12,7 +12,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.white, systemNavigationBarColor: Colors.white));
+      statusBarColor: Colors.transparent, systemNavigationBarColor: Colors.transparent));
   // work only on potrait mode setting up
   SystemChrome.setPreferredOrientations(
           [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp])
@@ -36,8 +36,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         appBarTheme: AppBarTheme(
-          iconTheme: IconThemeData(color: Colors.black, size: 28),
-          backgroundColor: Colors.white,
+          iconTheme: IconThemeData(color: Colors.white, size: 28),
+          backgroundColor: Color(0xFFc55df6),
           elevation: 2,
         ),
       ),

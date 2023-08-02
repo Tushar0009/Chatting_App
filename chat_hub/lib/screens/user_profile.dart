@@ -34,7 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           title: const Text(
             "Profile",
             style: TextStyle(
-                fontWeight: FontWeight.bold, color: Colors.black, fontSize: 26),
+                fontWeight: FontWeight.bold,  fontSize: 26),
           ),
         ),
         floatingActionButton: Padding(

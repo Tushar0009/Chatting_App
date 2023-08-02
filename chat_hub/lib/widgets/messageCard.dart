@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_hub/api/apis.dart';
 import 'package:chat_hub/helper/dateTimeFornat.dart';
+import 'package:chat_hub/helper/dialogs.dart';
 import 'package:chat_hub/models/messagesModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../main.dart';
 
@@ -174,33 +176,50 @@ class _MessageCardState extends State<MessageCard> {
                     color: Colors.grey,
                     borderRadius: BorderRadius.circular(20)),
               ),
-              widget.currMessage.type == Type.text?
-              _modelItems(
-                  icon: Icon(Icons.copy_all_outlined, color: Color(0XFFa100f2)),
-                  name: "Copy text",
-                  onTap: () {}) :
-                   _modelItems(
-                  icon: Icon(Icons.download, color: Color(0XFFa100f2)),
-                  name: "Save Image",
-                  onTap: () {}),
-              if(me == true) _modelItems(
-                  icon: Icon(Icons.delete, color: Colors.red),
-                  name: "Delete",
-                  onTap: () {}),
-
-                  Divider(
-                    color: Colors.black54,
-                    endIndent: mq.width * 0.04,
-                    indent: mq.width * 0.04,
-                  ),
+              widget.currMessage.type == Type.text
+                  ? _modelItems(
+                      icon: Icon(Icons.copy_all_outlined,
+                          color: Color(0XFFa100f2)),
+                      name: "Copy text",
+                      onTap: () async {
+                        await Clipboard.setData(
+                                ClipboardData(text: widget.currMessage.msg))
+                            .then((value) {
+                          Navigator.pop(context);
+                          Dialogs.showSnakBar(context, "Text Copied!");
+                        });
+                      })
+                  : _modelItems(
+                      icon: Icon(Icons.download, color: Color(0XFFa100f2)),
+                      name: "Save Image",
+                      onTap: () {}),
+              if (me == true)
+                _modelItems(
+                    icon: Icon(Icons.delete, color: Colors.red),
+                    name: "Delete",
+                    onTap: () async {
+                      await APIS
+                          .delteMessage(widget.currMessage)
+                          .then((value) => null);
+                      // to hide botto sheet
+                      Navigator.of(context).pop();
+                    }),
+              Divider(
+                color: Colors.black54,
+                endIndent: mq.width * 0.04,
+                indent: mq.width * 0.04,
+              ),
               _modelItems(
                   icon: Icon(Icons.remove_red_eye_outlined,
                       color: Color(0XFFa100f2)),
-                  name: "Send At",
+                  name:
+                      "Send At:  ${MyDateTime.getMessageTime(context: context, time: widget.currMessage.sent)}",
                   onTap: () {}),
               _modelItems(
                   icon: Icon(Icons.remove_red_eye, color: Color(0XFFa100f2)),
-                  name: "Read At",
+                  name: widget.currMessage.read.isEmpty
+                      ? "Read At: Not Seen Yet"
+                      : "Read At:  ${MyDateTime.getMessageTime(context: context, time: widget.currMessage.read)}",
                   onTap: () {}),
             ],
           );

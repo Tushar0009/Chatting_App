@@ -24,7 +24,8 @@ class _SplashScreenState extends State<SplashScreen> {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
           systemNavigationBarColor: Colors.transparent,
-          statusBarColor: Colors.transparent
+          statusBarColor: Color(0xFFc55df6),
+           statusBarBrightness: Brightness.light
           ));
 
       if (APIS.auth.currentUser != null) {
@@ -43,14 +44,18 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     //initializing media query (for getting device screen size)
-    mq = MediaQuery.of(context).size;
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xFFc55df6),
+        elevation: 0,
+      ),
+      backgroundColor: Color(0xFFc55df6),
       //body
       body:
         //app logo
         Center(
-            child: Image.asset('images/icon.png')),
+            child: Image.asset('images/icon.png', height: mq.height * 6, width: mq.width * 6,)),
     );
   }
 }

@@ -1,3 +1,4 @@
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_hub/api/apis.dart';
 import 'package:chat_hub/helper/dateTimeFornat.dart';
@@ -5,7 +6,6 @@ import 'package:chat_hub/helper/dialogs.dart';
 import 'package:chat_hub/models/messagesModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import '../main.dart';
 
 class MessageCard extends StatefulWidget {
@@ -192,7 +192,8 @@ class _MessageCardState extends State<MessageCard> {
                   : _modelItems(
                       icon: Icon(Icons.download, color: Color(0XFFa100f2)),
                       name: "Save Image",
-                      onTap: () {}),
+                      onTap: () {},
+                  ),
               if (me == true)
                 _modelItems(
                     icon: Icon(Icons.delete, color: Colors.red),

@@ -47,7 +47,7 @@ class _CharScreenState extends State<CharScreen> {
               automaticallyImplyLeading: false,
               flexibleSpace: _customAppBar(),
             ),
-            backgroundColor: Color(0xFFc37df8),
+            backgroundColor: Color(0xFFd1b7ff),
             body: Column(children: [
               Expanded(
                 child: StreamBuilder(

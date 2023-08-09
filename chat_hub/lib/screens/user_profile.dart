@@ -34,7 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           title: const Text(
             "Profile",
             style: TextStyle(
-                fontWeight: FontWeight.bold,  fontSize: 26),
+                fontWeight: FontWeight.bold,  fontSize: 26 , color: Colors.white),
           ),
         ),
         floatingActionButton: Padding(
@@ -59,9 +59,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               });
             },
             icon: Icon(
+              color : Colors.white,
               Icons.logout,
             ),
-            label: const Text("Log Out"),
+            label: const Text("Log Out" , style: TextStyle(color : Colors.white),),
           ),
         ),
         body: Form(
@@ -179,9 +180,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         minimumSize: Size(mq.width * 0.27, mq.height * 0.06)),
                     label: const Text(
                       "Save",
-                      style: TextStyle(fontSize: 18 ,) ,
+                      style: TextStyle(fontSize: 18 , color: Colors.white) ,
                     ),
-                    icon: const Icon(Icons.edit),
+                    icon: const Icon(Icons.edit , color: Colors.white,),
                     onPressed: () {
                       if (_formey.currentState!.validate()) {
                         _formey.currentState!.save();

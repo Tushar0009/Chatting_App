@@ -1,7 +1,7 @@
-import 'package:chat_hub/api/apis.dart';
-import 'package:chat_hub/models/user_firebase_model.dart';
-import 'package:chat_hub/screens/user_profile.dart';
-import 'package:chat_hub/widgets/chat_user_card.dart';
+import '/api/apis.dart';
+import '/models/user_firebase_model.dart';
+import '/screens/user_profile.dart';
+import '/widgets/chat_user_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

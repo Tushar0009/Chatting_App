@@ -1,10 +1,12 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chat_hub/api/apis.dart';
-import 'package:chat_hub/helper/dateTimeFornat.dart';
-import 'package:chat_hub/models/user_firebase_model.dart';
-import 'package:chat_hub/screens/viewUserProfile.dart';
-import 'package:chat_hub/widgets/messageCard.dart';
+import '/api/apis.dart';
+import '/helper/dateTimeFornat.dart';
+import '/models/user_firebase_model.dart';
+import '/screens/viewUserProfile.dart';
+import '/widgets/messageCard.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -30,104 +32,110 @@ class _CharScreenState extends State<CharScreen> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
-      child: SafeArea(
-        child: WillPopScope(
-          onWillPop: () {
-            // to hide emoji tab on using back button
-            if (_emojiFunction) {
-              setState(() {
-                _emojiFunction = !_emojiFunction;
-              });
-              return Future.value(false);
-            }
-            return Future.value(true);
-          },
-          child: Scaffold(
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              flexibleSpace: _customAppBar(),
-            ),
-            backgroundColor: Color(0xFFd1b7ff),
-            body: Column(children: [
-              Expanded(
-                child: StreamBuilder(
-                  stream: APIS.getAllMessages(widget.chatUser),
-                  builder: (context, snapshot) {
-                    switch (snapshot.connectionState) {
-                      //if data is loading
-                      case ConnectionState.waiting:
-                      case ConnectionState.none:
-
-                      //if some or all data is loaded then show it
-                      case ConnectionState.active:
-                      case ConnectionState.done:
-                        final data = snapshot.data?.docs;
-                        _list = data
-                                ?.map((e) => MessageModel.fromJson(e.data()))
-                                .toList() ??
-                            [];
-
-                        return _list.isNotEmpty
-                            ? ListView.builder(
-                                reverse: true,
-                                itemCount: _list.length,
-                                padding: EdgeInsets.only(
-                                    top: MediaQuery.of(context).size.height *
-                                        0.01),
-                                physics: BouncingScrollPhysics(),
-                                itemBuilder: (context, index) {
-                                  return MessageCard(
-                                    currMessage: _list[index],
-                                  );
-                                },
-                              )
-                            : Center(
-                                child: SizedBox(),
-                              );
-                    }
-                  },
-                ),
-              ),
-
-              // loading multiple images
-              if (_imageUploding)
-                const Align(
-                    alignment: Alignment.centerRight,
-                    child: Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                        ))),
-
-              //***************//
-              _chatInput(),
-
-              // emoji picker
-              if (_emojiFunction == true)
-                SizedBox(
-                  height: mq.height * .35,
-                  child: EmojiPicker(
-                    textEditingController: _textController,
-                    config: Config(
-                      columns: 8,
-                      bgColor: Color(0xFFd8f3dc),
-                      emojiSizeMax: 28 * (Platform.isAndroid ? 1.28 : 1.0),
-                    ),
-                  ),
-                )
-            ]),
+      child:
+          //  SafeArea(
+          WillPopScope(
+        onWillPop: () {
+          // to hide emoji tab on using back button
+          if (_emojiFunction) {
+            setState(() {
+              _emojiFunction = !_emojiFunction;
+            });
+            return Future.value(false);
+          }
+          return Future.value(true);
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            elevation: 0,
+            automaticallyImplyLeading: false,
+            flexibleSpace: _customAppBar(),
+            // toolbarHeight: mq.height * 0.1,
           ),
+          backgroundColor: Color(0xFFd1b7ff),
+          body: Column(children: [
+            Expanded(
+              child: StreamBuilder(
+                stream: APIS.getAllMessages(widget.chatUser),
+                builder: (context, snapshot) {
+                  switch (snapshot.connectionState) {
+                    //if data is loading
+                    case ConnectionState.waiting:
+                    case ConnectionState.none:
+
+                    //if some or all data is loaded then show it
+                    case ConnectionState.active:
+                    case ConnectionState.done:
+                      final data = snapshot.data?.docs;
+                      _list = data
+                              ?.map((e) => MessageModel.fromJson(e.data()))
+                              .toList() ??
+                          [];
+
+                      return _list.isNotEmpty
+                          ? ListView.builder(
+                              reverse: true,
+                              itemCount: _list.length,
+                              padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.height *
+                                      0.01),
+                              physics: BouncingScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return MessageCard(
+                                  currMessage: _list[index],
+                                );
+                              },
+                            )
+                          : Center(
+                              child: SizedBox(),
+                            );
+                  }
+                },
+              ),
+            ),
+
+            // loading multiple images
+            if (_imageUploding)
+              const Align(
+                  alignment: Alignment.centerRight,
+                  child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                      ))),
+
+            //***************//
+            _chatInput(),
+
+            // emoji picker
+            if (_emojiFunction == true)
+              SizedBox(
+                height: mq.height * .35,
+                child: EmojiPicker(
+                  textEditingController: _textController,
+                  config: Config(
+                    columns: 8,
+                    bgColor: Color(0xFFd8f3dc),
+                    emojiSizeMax: 28 * (Platform.isAndroid ? 1.28 : 1.0),
+                  ),
+                ),
+              )
+          ]),
         ),
       ),
+
+      // ),
     );
   }
 
   Widget _customAppBar() {
     return Container(
-      decoration: BoxDecoration(
-          color : Color(0xFFc55df6),
-          ),
+      height: mq.height * 7,
+      padding: EdgeInsets.only(top: mq.height * 0.03),
+      decoration: const BoxDecoration(
+        color: Color(0xFFc55df6),
+      ),
       child: InkWell(
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
@@ -177,8 +185,8 @@ class _CharScreenState extends State<CharScreen> {
                             fontWeight: FontWeight.w500,
                             color: Colors.white),
                       ),
-                      SizedBox(
-                        height: 2,
+                      const SizedBox(
+                        height: 1,
                       ),
                       Text(
                         list.isNotEmpty
@@ -191,11 +199,11 @@ class _CharScreenState extends State<CharScreen> {
                                 context: context,
                                 lastActiveTime: widget.chatUser.lastActive,
                               ),
-                        style:  TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w400,
-                             color: Colors.white ,
-                            ),
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   )
@@ -208,8 +216,8 @@ class _CharScreenState extends State<CharScreen> {
 
   Widget _chatInput() {
     return Padding(
-      padding: EdgeInsets.symmetric(
-          vertical: mq.height * 0.01, horizontal: mq.width * 0.02),
+      padding: EdgeInsets.only(
+          bottom: mq.height * 0.05 , left: mq.width * 0.02 , right: mq.width * 0.02),
       child: Row(
         children: [
           Expanded(
@@ -236,7 +244,7 @@ class _CharScreenState extends State<CharScreen> {
                         if (_emojiFunction)
                           setState(() => _emojiFunction = !_emojiFunction);
                       },
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           hintText: "Type Something....",
                           hintStyle: TextStyle(color: Color(0xFFb66ee8)),
                           border: InputBorder.none),
@@ -252,7 +260,7 @@ class _CharScreenState extends State<CharScreen> {
                         for (var it in images) {
                           setState(() => _imageUploding = true);
                           await APIS.sendImageChat(
-                              widget.chatUser, File(it!.path));
+                              widget.chatUser, File(it.path));
                           setState(() => _imageUploding = false);
                         }
                       },

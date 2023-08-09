@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:chat_hub/api/apis.dart';
-import 'package:chat_hub/screens/homeScreen.dart';
+import '/api/apis.dart';
+import '/screens/homeScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:chat_hub/helper/dialogs.dart';
+import '/helper/dialogs.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

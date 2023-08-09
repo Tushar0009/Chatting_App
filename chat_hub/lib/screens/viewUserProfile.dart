@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chat_hub/models/user_firebase_model.dart';
-import 'package:chat_hub/screens/chat_screen.dart';
+import '/models/user_firebase_model.dart';
+import '/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:chat_hub/main.dart';
+import '/main.dart';
 class ViewUserProfile extends StatefulWidget {
   const ViewUserProfile({super.key, required this.user});
 
@@ -21,6 +21,7 @@ class _ViewUserProfileState extends State<ViewUserProfile> {
         appBar: AppBar(
           elevation: 0,
           toolbarHeight: mq.height * 0.08,
+          iconTheme: IconThemeData(color : Colors.black),
         ),
         body: SingleChildScrollView(
           child: Column(

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:chat_hub/models/messagesModel.dart';
-import 'package:chat_hub/models/user_firebase_model.dart';
+import '/models/messagesModel.dart';
+import '/models/user_firebase_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';

@@ -1,12 +1,12 @@
-import 'package:chat_hub/api/apis.dart';
-import 'package:chat_hub/helper/dateTimeFornat.dart';
-import 'package:chat_hub/models/messagesModel.dart';
-import 'package:chat_hub/models/user_firebase_model.dart';
+import '/api/apis.dart';
+import '/helper/dateTimeFornat.dart';
+import '/models/messagesModel.dart';
+import '/models/user_firebase_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chat_hub/screens/chat_screen.dart';
-import 'package:chat_hub/widgets/profileDialog.dart';
+import '/screens/chat_screen.dart';
+import '/widgets/profileDialog.dart';
 import 'package:flutter/material.dart';
-import 'package:chat_hub/main.dart';
+import '/main.dart';
 
 class ChatUsersCart extends StatefulWidget {
   const ChatUsersCart({super.key, required this.userdata});

@@ -1,10 +1,12 @@
+import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chat_hub/api/apis.dart';
-import 'package:chat_hub/helper/dateTimeFornat.dart';
-import 'package:chat_hub/helper/dialogs.dart';
-import 'package:chat_hub/models/messagesModel.dart';
+import '/api/apis.dart';
+import '/helper/dateTimeFornat.dart';
+import '/helper/dialogs.dart';
+import '/models/messagesModel.dart';
 import 'package:flutter/material.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:flutter/services.dart';
 import '../main.dart';
 
@@ -192,8 +194,21 @@ class _MessageCardState extends State<MessageCard> {
                   : _modelItems(
                       icon: Icon(Icons.download, color: Color(0XFFa100f2)),
                       name: "Save Image",
-                      onTap: () {},
-                  ),
+                      onTap: () async {
+                        try {
+                          await GallerySaver.saveImage(widget.currMessage.msg,
+                                  albumName: 'Char Hub')
+                              .then((success) {
+                            Navigator.of(context).pop();
+                            if (success != null && success) {
+                              Dialogs.showSnakBar(context, 'Image Saved!');
+                            }
+                          });
+                        } catch (e) {
+                          print('error while saving : $e');
+                        }
+                      },
+                    ),
               if (me == true)
                 _modelItems(
                     icon: Icon(Icons.delete, color: Colors.red),

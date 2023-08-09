@@ -7,7 +7,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.3 <4.0.0'
+  sdk: '>=2.19.0 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -16,6 +16,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  gallery_saver: ^2.3.2
   flutter:
     sdk: flutter
 
@@ -33,8 +34,10 @@ dependencies:
   firebase_storage: ^11.2.4
   emoji_picker_flutter: ^1.6.1
   firebase_messaging: ^14.6.5
-  http: ^1.1.0
+  http: ^0.13.3
   flutter_notification_channel: ^2.0.0
+  
+  
 
 dev_dependencies:
   flutter_test:

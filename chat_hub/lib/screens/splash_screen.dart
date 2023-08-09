@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:chat_hub/auth/loginScreen.dart';
-import 'package:chat_hub/screens/homeScreen.dart';
+import '/auth/loginScreen.dart';
+import '/screens/homeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../main.dart';
@@ -24,8 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
           systemNavigationBarColor: Colors.transparent,
-          statusBarColor: Color(0xFFc55df6),
-           statusBarBrightness: Brightness.light
+          statusBarColor: Colors.transparent,
           ));
 
       if (APIS.auth.currentUser != null) {

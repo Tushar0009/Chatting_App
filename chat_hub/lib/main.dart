@@ -1,4 +1,4 @@
-import 'package:chat_hub/screens/splash_screen.dart';
+import '/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
@@ -12,7 +12,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent, systemNavigationBarColor: Colors.transparent));
+      statusBarColor: Colors.transparent,
+      systemNavigationBarColor: Colors.transparent));
   // work only on potrait mode setting up
   SystemChrome.setPreferredOrientations(
           [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp])
@@ -35,10 +36,10 @@ class MyApp extends StatelessWidget {
       title: 'Chat Hub',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        iconTheme: IconThemeData(color: Colors.white),
         appBarTheme: AppBarTheme(
           iconTheme: IconThemeData(color: Colors.white, size: 28),
-          backgroundColor: Color(0xFFc55df6),
-          elevation: 2,
+          // backgroundColor: Color(0xFFc55df6),
         ),
       ),
       home: const SplashScreen(),

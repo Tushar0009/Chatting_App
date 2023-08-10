@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         iconTheme: IconThemeData(color: Colors.white),
         appBarTheme: AppBarTheme(
           iconTheme: IconThemeData(color: Colors.white, size: 28),
-          // backgroundColor: Color(0xFFc55df6),
+          backgroundColor: Color(0xFFd689ff),
         ),
       ),
       home: const SplashScreen(),

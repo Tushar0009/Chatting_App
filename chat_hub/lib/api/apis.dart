@@ -242,4 +242,25 @@ class APIS {
       await storage.refFromURL(message.msg).delete();
     }
   }
+
+  static Future<bool> addUser(String email) async {
+    final res = await firestore
+        .collection('users')
+        .where('email', isEqualTo: email)
+        .get();
+
+    print("check is user exists :  + ${res.docs}");
+    if (res.docs.isNotEmpty && res.docs.first.id != getUser.uid) {
+      firestore
+          .collection('users')
+          .doc(getUser.uid)
+          .collection('friends')
+          .doc(res.docs.first.id)
+          .set({});
+
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

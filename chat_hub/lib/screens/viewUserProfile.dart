@@ -3,6 +3,7 @@ import '/models/user_firebase_model.dart';
 import '/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import '/main.dart';
+
 class ViewUserProfile extends StatefulWidget {
   const ViewUserProfile({super.key, required this.user});
 
@@ -19,9 +20,10 @@ class _ViewUserProfileState extends State<ViewUserProfile> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
+          toolbarHeight: mq.height * 0.04,
           elevation: 0,
-          toolbarHeight: mq.height * 0.08,
-          iconTheme: IconThemeData(color : Colors.black),
+          iconTheme: IconThemeData(color : Colors.black, size:  30),
+          backgroundColor: Colors.transparent,
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -93,14 +95,21 @@ class _ViewUserProfileState extends State<ViewUserProfile> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   TextButton.icon(
-                    onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => CharScreen(chatUser: widget.user),)),
-                     icon: Icon(Icons.message_rounded,size: mq.height *0.055,),
-                      label: Text("Message",style: TextStyle(fontSize: mq.height *0.025),),
-                      
-                      )
+                    onPressed: () =>
+                        Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => CharScreen(chatUser: widget.user),
+                    )),
+                    icon: Icon(
+                      Icons.message_rounded,
+                      size: mq.height * 0.055,
+                    ),
+                    label: Text(
+                      "Message",
+                      style: TextStyle(fontSize: mq.height * 0.025),
+                    ),
+                  )
                 ],
               ),
-              
             ],
           ),
         ),

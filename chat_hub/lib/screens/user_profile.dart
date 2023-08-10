@@ -31,6 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
+          backgroundColor : Theme.of(context).appBarTheme.backgroundColor,
           title: const Text(
             "Profile",
             style: TextStyle(

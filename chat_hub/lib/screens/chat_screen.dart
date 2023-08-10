@@ -30,6 +30,8 @@ class _CharScreenState extends State<CharScreen> {
   final _textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+  final _isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child:
@@ -52,7 +54,7 @@ class _CharScreenState extends State<CharScreen> {
             flexibleSpace: _customAppBar(),
             // toolbarHeight: mq.height * 0.1,
           ),
-          backgroundColor: Color(0xFFd1b7ff),
+          backgroundColor: Color(0xFFebd9fc),
           body: Column(children: [
             Expanded(
               child: StreamBuilder(
@@ -106,7 +108,7 @@ class _CharScreenState extends State<CharScreen> {
                       ))),
 
             //***************//
-            _chatInput(),
+            _chatInput(_isKeyboard),
 
             // emoji picker
             if (_emojiFunction == true)
@@ -132,9 +134,9 @@ class _CharScreenState extends State<CharScreen> {
   Widget _customAppBar() {
     return Container(
       height: mq.height * 7,
-      padding: EdgeInsets.only(top: mq.height * 0.03),
+      padding: EdgeInsets.only(top: mq.height * 0.04),
       decoration: const BoxDecoration(
-        color: Color(0xFFc55df6),
+        color: Color(0xFFd689ff),
       ),
       child: InkWell(
           onTap: () {
@@ -214,14 +216,16 @@ class _CharScreenState extends State<CharScreen> {
     );
   }
 
-  Widget _chatInput() {
+  Widget _chatInput(bool check) {
     return Padding(
       padding: EdgeInsets.only(
-          bottom: mq.height * 0.05 , left: mq.width * 0.02 , right: mq.width * 0.02),
+          bottom: check || _emojiFunction ? mq.height * 0.01   : mq.height * 0.05,
+          left: mq.width * 0.02,
+          right: mq.width * 0.02),
       child: Row(
         children: [
           Expanded(
-            child: Card(
+            child:  Card(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18)),
               child: Row(

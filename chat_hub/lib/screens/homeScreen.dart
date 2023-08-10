@@ -4,6 +4,8 @@ import '/screens/user_profile.dart';
 import '/widgets/chat_user_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:chat_hub/main.dart';
+import 'package:chat_hub/helper/dialogs.dart';
 
 enum SampleItem { itemOne, itemTwo }
 
@@ -26,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement initState
     super.initState();
     APIS.currentUserInfo();
-    
+
     //now it work according to user lifestyle
     SystemChannels.lifecycle.setMessageHandler((message) {
       if (APIS.auth.currentUser != null) {
@@ -55,16 +57,23 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         },
         child: Scaffold(
+            floatingActionButton: Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: FloatingActionButton(
+                  onPressed: () => {_addCharUser()},
+                  child: Icon(Icons.person_add_alt_1_sharp),
+                )),
             appBar: AppBar(
+              // backgroundColor : Theme.of(context).appBarTheme.backgroundColor,
               flexibleSpace: Container(
                 decoration: BoxDecoration(
-                   color: Color(0xFFc55df6),
-              ),
+                  color: Color(0xFFd689ff),
+                ),
               ),
               title: _isSearching
                   ? TextField(
                       decoration: InputDecoration(
-                        labelStyle: TextStyle(color : Colors.white),
+                        labelStyle: TextStyle(color: Colors.white),
                         label: Text("Username , Email ....."),
                         border: InputBorder.none,
                       ),
@@ -91,7 +100,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   : Text(
                       'ChatHub',
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.white , fontSize: 22),
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 22),
                     ),
               actions: [
                 IconButton(
@@ -101,7 +112,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       });
                     },
                     icon: Icon(
-                        _isSearching ? Icons.cancel_outlined : Icons.search , color: Colors.white,)),
+                      _isSearching ? Icons.cancel_outlined : Icons.search,
+                      color: Colors.white,
+                    )),
                 PopupMenuButton<SampleItem>(
                   icon: Icon(
                     Icons.more_vert,
@@ -172,5 +185,58 @@ class _HomeScreenState extends State<HomeScreen> {
             )),
       ),
     );
+  }
+
+  void _addCharUser() {
+    String email = '';
+    showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              title: Row(
+                children: [
+                  Icon(Icons.person, color: Colors.purple),
+                  SizedBox(
+                    width: mq.width * 0.03,
+                  ),
+                  Text("Add User"),
+                ],
+              ),
+              content: TextFormField(
+                maxLines: null,
+                onChanged: (val) => email = val,
+                decoration: InputDecoration(
+                    hintText: "User Email Address",
+                    prefixIcon: Icon(
+                      Icons.email_outlined,
+                      color: Colors.purple,
+                    ),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15))),
+              ),
+              actions: [
+                MaterialButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Cancel'),
+                ),
+                MaterialButton(
+                  onPressed: () async {
+                    Navigator.of(context).pop();
+                    print("Email send $email");
+                    if (email.isNotEmpty) {
+                      await APIS.addUser(email).then((value) {
+                        if (value == false) {
+                          Dialogs.showSnakBar(context, "User does not exist");
+                        }
+                      });
+                    }
+                  },
+                  child: Text('Add'),
+                )
+              ],
+            ));
   }
 }

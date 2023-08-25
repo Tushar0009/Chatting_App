@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:chat_hub/auth/login_Items/backGroungIramges.dart';
 import '/api/apis.dart';
 import '/screens/homeScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -61,158 +61,90 @@ class _LoginScreenState extends State<LoginScreen> {
       return null;
     }
   }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                height: size.height * 0.73,
-                decoration: BoxDecoration(
-                    color: Colors.pink,
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(50),
-                        bottomRight: Radius.circular(50))),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: size.height * 0.1, left: size.width * 0.07),
-                      child: Text("Login",
-                          style: TextStyle(
-                              fontSize: 45, fontWeight: FontWeight.bold)),
-                    ),
-                    Padding(
-                        padding: EdgeInsets.only(
-                            top: size.height * 0.01, left: size.width * 0.07),
-                        child: Text("Welcome",
-                            style: TextStyle(
-                                fontSize: 30, fontWeight: FontWeight.w600))),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: size.height * 0.06,
-                          left: size.width * 0.07,
-                          right: size.width * 0.07),
-                      child: Form(
-                          child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          TextFormField(
-                            decoration: const InputDecoration(
-                              labelStyle: TextStyle(color: Colors.white),
-                              labelText: 'Email Address',
+    return Stack(
+      children: [
+        BackGroundImage(),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SafeArea(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: size.height * 0.2,
+                ),
+                Container(
+                    height: size.height * 0.1,
+                    child: Center(
+                        child: Text(
+                      "Chat hub",
+                      style: TextStyle(
+                          fontSize: size.height * 0.085,
+                          color: Colors.white.withOpacity(0.8),
+                          fontWeight: FontWeight.bold),
+                    ))),
+                SizedBox(
+                  height: size.height * 0.05,
+                ),
+                Container(
+                  child: Text("Welcome back!",
+                      style: TextStyle(
+                          fontSize: size.height * 0.04,
+                          color: Colors.white.withOpacity(0.9),
+                          fontWeight: FontWeight.bold)),
+                ),
+                SizedBox(
+                  height: size.height * 0.03,
+                ),
+                Container(
+                  height: size.height * 0.1,
+                  child: Center(
+                      child: Icon(
+                    Icons.lock,
+                    size: size.height * 0.09,
+                  )),
+                ),
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
+                InkWell(
+                    onTap: _handleGoogleSignIn,
+                    child: Container(
+                        width: size.width * 0.9,
+                        height: size.height * 0.1,
+                        decoration: BoxDecoration(
+                            color: Colors.grey.withOpacity(0.3),
+                            border: Border.all(
+                                width: 2, color: Colors.grey.shade600),
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: size.width * 0.04,
                             ),
-                            keyboardType: TextInputType.emailAddress,
-                            autocorrect: false,
-                            textCapitalization: TextCapitalization.none,
-                            validator: (value) {
-                              if (value == null ||
-                                  value.trim().isEmpty ||
-                                  !value.contains('@')) {
-                                return "Please enter the valid email address.";
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(
-                            height: size.height * 0.02,
-                          ),
-                          TextFormField(
-                            decoration: const InputDecoration(
-                              labelStyle: TextStyle(color: Colors.white),
-                              labelText: 'Password',
+                            Image.asset('images/google.png',
+                                height: size.height * 0.07),
+                            SizedBox(
+                              width: size.width * 0.05,
                             ),
-                            obscureText: true,
-                            validator: (value) {
-                              if (value == null || value.trim().length < 6) {
-                                return "Password must be at least 6 characters long.";
-                              }
-                              return null;
-                            },
-                          ),
-                          TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                "Forgot password ?",
-                                style: TextStyle(color: Colors.white),
-                              )),
-                        ],
-                      )),
-                    ),
-                    SizedBox(
-                      height: size.height * 0.05,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: size.width * 0.07),
-                      child: InkWell(
-                          onTap: () {},
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white),
-                            height: size.height * 0.08,
-                            width: size.width * 0.86,
-                            child: Center(
-                                child: Text(
-                              "LOGIN",
+                            Text(
+                              "Continue with Google",
                               style: TextStyle(
-                                  fontSize: 30,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500),
-                            )),
-                          )),
-                    )
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: size.height * 0.05),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                        width: size.width * 0.2,
-                        height: size.height * 0.1,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 2, color: Colors.grey.shade300),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: Image.asset('images/facebook.png'),
-                        )),
-                    Container(
-                        width: size.width * 0.2,
-                        height: size.height * 0.1,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 2, color: Colors.grey.shade300),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: IconButton(
-                          onPressed: _handleGoogleSignIn,
-                          icon: Image.asset('images/google.png'),
-                        )),
-                    Container(
-                        width: size.width * 0.2,
-                        height: size.height * 0.1,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 2, color: Colors.grey.shade300),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: Image.asset('images/twitter.png'),
-                        )),
-                  ],
-                ),
-              )
-            ],
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: size.height * 0.025),
+                            )
+                          ],
+                        ))),
+              ],
+            ),
           ),
-        ));
+        )
+      ],
+    );
   }
 }

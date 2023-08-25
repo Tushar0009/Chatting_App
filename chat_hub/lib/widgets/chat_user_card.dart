@@ -42,12 +42,7 @@ class _ChatUsersCartState extends State<ChatUsersCart> {
                       [];
               if (list.isNotEmpty) _message = list[0];
               return ListTile(
-                leading: InkWell(
-                  onTap: () => showDialog(
-                      context: context,
-                      builder: (context) =>
-                          ProfileDialog(user: widget.userdata)),
-                  child: ClipRRect(
+                leading:  ClipRRect(
                     borderRadius: BorderRadius.circular(mq.height * 0.03),
                     child: CachedNetworkImage(
                       width: mq.height * 0.06,
@@ -57,7 +52,6 @@ class _ChatUsersCartState extends State<ChatUsersCart> {
                           CircleAvatar(child: Icon(Icons.person)),
                     ),
                   ),
-                ),
                 title: Text(widget.userdata.name),
                 subtitle: Text(
                   _message != null

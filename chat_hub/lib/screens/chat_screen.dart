@@ -30,7 +30,7 @@ class _CharScreenState extends State<CharScreen> {
   final _textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-  final _isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
+    final _isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -219,13 +219,13 @@ class _CharScreenState extends State<CharScreen> {
   Widget _chatInput(bool check) {
     return Padding(
       padding: EdgeInsets.only(
-          bottom: check || _emojiFunction ? mq.height * 0.01   : mq.height * 0.05,
+          bottom: check || _emojiFunction ? mq.height * 0.01 : mq.height * 0.05,
           left: mq.width * 0.02,
           right: mq.width * 0.02),
       child: Row(
         children: [
           Expanded(
-            child:  Card(
+            child: Card(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18)),
               child: Row(
@@ -300,9 +300,14 @@ class _CharScreenState extends State<CharScreen> {
           MaterialButton(
             onPressed: () {
               if (_textController.text.isNotEmpty) {
-                APIS.sendMessage(
-                    widget.chatUser, _textController.text, Type.text);
-                _textController.clear();
+                if (_list.isEmpty)
+                  APIS.sendFirstMessage(
+                      widget.chatUser, _textController.text, Type.text);
+                else {
+                  APIS.sendMessage(
+                      widget.chatUser, _textController.text, Type.text);
+                  _textController.clear();
+                }
               }
             },
             minWidth: 0,

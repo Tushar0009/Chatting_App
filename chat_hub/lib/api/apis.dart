@@ -118,10 +118,12 @@ class APIS {
   }
 
   // getting users accept current user
-  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllUSers() {
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllUSers(
+      List<String> ids) {
+    print(ids);
     return firestore
         .collection('users')
-        .where('id', isNotEqualTo: getUser.uid)
+        .where('id', whereIn: ids.isEmpty ? [''] : ids)
         .snapshots();
   }
 
@@ -132,6 +134,16 @@ class APIS {
     });
   }
 
+   // for adding an user to my user when first message is send
+  static Future<void> sendFirstMessage(
+      UserFireBase chatUser, String msg, Type type) async {
+    await firestore
+        .collection('users')
+        .doc(chatUser.id)
+        .collection('friends')
+        .doc(getUser.uid)
+        .set({}).then((value) => sendMessage(chatUser, msg, type));
+  }
 // user profile update
   static Future<void> updateProfilePhoto(File file) async {
     final ext = file.path.split('.').last;
@@ -262,5 +274,13 @@ class APIS {
     } else {
       return false;
     }
+  }
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllFriend() {
+    return firestore
+        .collection('users')
+        .doc(getUser.uid)
+        .collection('friends')
+        .snapshots();
   }
 }

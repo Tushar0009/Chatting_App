@@ -17,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<UserFireBase> list = [];
+  List<UserFireBase> _list = [];
   // storing scearched items
   final List<UserFireBase> _searchList = [];
   //for storing search status
@@ -82,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       onChanged: (Value) {
                         _searchList.clear();
 
-                        for (var i in list) {
+                        for (var i in _list) {
                           if (i.name
                                   .toLowerCase()
                                   .contains(Value.toLowerCase()) ||
@@ -135,16 +135,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       value: SampleItem.itemOne,
                       child: Text('Profile'),
                     ),
-                    const PopupMenuItem<SampleItem>(
-                      value: SampleItem.itemTwo,
-                      child: Text('Setting'),
-                    ),
                   ],
                 ),
               ],
             ),
             body: StreamBuilder(
-              stream: APIS.getAllUSers(),
+              stream: APIS.getAllFriend(),
               builder: (context, snapshot) {
                 switch (snapshot.connectionState) {
                   //if data is loading
@@ -155,31 +151,46 @@ class _HomeScreenState extends State<HomeScreen> {
                   //if some or all data is loaded then show it
                   case ConnectionState.active:
                   case ConnectionState.done:
-                    final data = snapshot.data?.docs;
-                    list = data
-                            ?.map((e) => UserFireBase.fromJson(e.data()))
-                            .toList() ??
-                        [];
-                    if (list.isNotEmpty) {
-                      return ListView.builder(
-                        itemCount:
-                            _isSearching ? _searchList.length : list.length,
-                        padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.01),
-                        physics: BouncingScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return ChatUsersCart(
-                              userdata: _isSearching
-                                  ? _searchList[index]
-                                  : list[index]);
-                        },
-                      );
-                    } else {
-                      return const Center(
-                        child: Text("No Chat Found!",
-                            style: TextStyle(fontSize: 20)),
-                      );
-                    }
+                    return StreamBuilder(
+                        stream: APIS.getAllUSers(
+                            snapshot.data?.docs.map((e) => e.id).toList() ??
+                                []),
+                        builder: (context, snapshot) {
+                          switch (snapshot.connectionState) {
+                            //if data is loading
+                            case ConnectionState.waiting:
+                            case ConnectionState.none:
+  
+                            case ConnectionState.active:
+                            case ConnectionState.done:
+                              final data = snapshot.data?.docs;
+                              _list = data
+                                      ?.map((e) =>
+                                          UserFireBase.fromJson(e.data()))
+                                      .toList() ??
+                                  [];
+                              if (_list.isNotEmpty) {
+                                return ListView.builder(
+                                  itemCount: _isSearching
+                                      ? _searchList.length
+                                      : _list.length,
+                                  padding: EdgeInsets.only(
+                                      top: MediaQuery.of(context).size.height *
+                                          0.01),
+                                  physics: BouncingScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return ChatUsersCart(
+                                        userdata: _isSearching
+                                            ? _searchList[index]
+                                            : _list[index]);
+                                  },
+                                );
+                              } 
+                              else {
+                                return const Center(child: Text("No User Found"),);
+                              }
+                          }
+                        });
                 }
               },
             )),
@@ -204,6 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               content: TextFormField(
+                keyboardType: TextInputType.streetAddress,
                 maxLines: null,
                 onChanged: (val) => email = val,
                 decoration: InputDecoration(
